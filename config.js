@@ -1,4 +1,8 @@
 function fz(obj) {
+    if (Array.isArray(obj)) {
+        return Object.freeze(obj.map(fz))
+    }
+    
     return Object.freeze(obj)
 }
 
@@ -104,7 +108,7 @@ export const config = fz({
         default: 'all',
     }),
     slo: fz({
-        min: 0,
+        min: 50,
         max: 99.999,
         default: 99,
         presets: fz([
@@ -179,7 +183,7 @@ export const config = fz({
             },
         ]),
     }),
-    errorBudgetValidExample: fz({
+    estimatedValidEvents: fz({
         min: 1,
         max: 1_000_000_000,
         step: 1,
@@ -236,7 +240,7 @@ export const config = fz({
     }),
     longWindowPerc: fz({
         min: 0.1,
-        max: 50,
+        max: 99,
         step: 0.1,
         default: 5,
     }),

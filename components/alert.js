@@ -1,9 +1,12 @@
-import { arrToPolygonPoints } from '../lib/svg.js'
-import burnEventComponent from './burn-event-component.js'
-const template = await (await fetch('components/burn-component.html')).text()
+import { fetchTemplate, loadCss } from '../lib/fetch-template.js'
+import burnEventComponent from './burn-event.js'
+import verticalAxisComponent from './vertical-axis.js'
+import horizontalAxisComponent from './horizontal-axis.js'
+
+loadCss(import.meta.url)
 
 export default {
-    template,
+    template: await fetchTemplate(import.meta.url),
     data() {
         return {
             width: 500,
@@ -17,11 +20,16 @@ export default {
         }
     },
     props: {
-        burnRate: Number,
-        longAlertPerc: Number,
+        longWindowPerc: Number,
+        shortWindowDivider: Number,
+        shortWindowVisible: Boolean,
+        alertLongWindow: Object,
+        alertShortWindow: Object,
     },
     components: {
         burnEventComponent,
+        verticalAxisComponent,
+        horizontalAxisComponent,
     },
     computed: {
         viewBox() {
@@ -42,22 +50,12 @@ export default {
         bottomY() {
             return this.height - this.margin.bottom
         },
-        horizontalAxisArrowPoints() {
-            return arrToPolygonPoints(
-                [this.rightX, this.bottomY],
-                [this.rightX - 5, this.bottomY - 3],
-                [this.rightX - 5, this.bottomY + 3],
-            )
+        longWindowX() {
+            return this.margin.left + (this.rangeX * this.longWindowPerc / 100)
         },
-        d() {
-            // the ratio of the error budget from the total SLO window
-            const errorBudgetRatio = 1 / this.burnRate
-            const longAlertRatio = errorBudgetRatio * this.longAlertPerc / 100
-
-            const ebBurnedX = this.rangeX * errorBudgetRatio + this.margin.left
-            const longAlertX = this.rangeX * longAlertRatio + this.margin.left
-
-            return { ebBurnedX, longAlertX }
+        shortWindowX() {
+            const shortWindowPerc = this.longWindowPerc / this.shortWindowDivider
+            return this.longWindowX - (this.rangeX * shortWindowPerc / 100)
         },
     },
     methods: {
