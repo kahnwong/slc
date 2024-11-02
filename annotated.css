@@ -1,0 +1,38 @@
+.annotated {
+    background: linear-gradient(to right, var(--background-color) 50%, var(--background-darker) 50%);
+}
+
+.show-hide-component .annotated {
+    border-bottom-left-radius: var(--bradius);
+    border-bottom-right-radius: var(--bradius);
+}
+
+.annotated__controls {
+    padding: var(--gap2);
+}
+
+.annotated__controls + .annotated__controls {
+    padding-top: 0;
+}
+
+.annotated__help {
+    padding: var(--gap2);
+}
+
+
+@media screen and (min-width: 1000px) {
+    .annotated {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+    
+    .annotated__controls {
+        grid-column: 1;
+    }
+    
+    .annotated__help {
+        grid-column: 2;
+        padding-bottom: 5em;
+    }
+}

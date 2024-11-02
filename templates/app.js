@@ -1,11 +1,13 @@
 import { createApp } from '../vendor/vue.js'
 import HelpComponent from '../components/help.js'
 import ExtLink from '../components/ext-link.js'
-
+import FooterComponent from '../components/footer.js'
+import SLFractionComponent from '../components/sl-fraction.js'
 import { searchTemplates } from './templates.js'
 import { isNum } from '../lib/validation.js'
-import { normalizeUnit } from '../lib/time.js'
+import { humanTimeSlices } from '../lib/time.js'
 import { stateToUrl } from '../lib/share.js'
+import { config } from '../config.js'
 
 export const app = createApp({
     data() {
@@ -22,17 +24,21 @@ export const app = createApp({
     methods: {
         slcUrl(template) {
             const url = new URL('./index.html', window.location.origin)
-            return stateToUrl(url, template).toString()
+            const { urlVer } = config
+            return stateToUrl(url, { urlVer, ...template }).toString()
         },
         templateUnit(template) {
-            return normalizeUnit(template.unit)
+            const { timeslice, eventUnit } = template
+            return isNum(timeslice) ? humanTimeSlices(timeslice) : eventUnit
         },
         templateType(template) {
-            return isNum(template.unit) ? 'Time-Based' : 'Event-Based'
+            return isNum(template.timeslice) ? 'Time-Based' : 'Event-Based'
         },
     },
     components: {
         HelpComponent,
         ExtLink,
+        FooterComponent,
+        SLFractionComponent,
     },
 })

@@ -1,15 +1,14 @@
-@import url('variables.css');
-
 /* Colors for a very simple manually annotated code highlighter */
 
 code {
     font-family: 'Roboto Mono', monospace;
 }
 
-.block.code {
+.code.block {
     background-color: var(--background-darker);
     padding: 1em;
     position: relative;
+    overflow: auto;
 }
 
 .block.code button {
@@ -49,6 +48,7 @@ code .punct {
 /* expressions */
 code .exprs {
     color: var(--secondary-color);
+    word-break: break-word;
 }
 
 /* constants */
@@ -56,51 +56,9 @@ code .const {
     color: var(--brand-purple);
 }
 
-/* invisible text that is used to annotate the code for when it is copied*/
-.invis {
-    color: transparent;
-    font-size: xx-small;
-}
-
-/* a simple container for a fractional formula in plain HTML instead of MathML */
-.formula {
-    display: flex;
-    gap: 0.5em;
-    flex-wrap: wrap;
-}
-
-/* takes the whole height */
-.formula__whole {
-    align-self: center;
-}
-
-.formula__break {
-    flex-basis: 100%;
-    height: 0;
-}
-
-/* a two cell column */
-.formula__fraction {
-    display: flex;
-    flex-direction: column;
-}
-
-/* takes the top half */
-.formula__fraction--top {
-    text-align: center;
-    border-bottom: 1px solid var(--brand-pink);
-    padding-bottom: 0.2em;
-}
-
-/* takes the bottom half */
-.formula__fraction--bottom {
-    text-align: center;
-    padding-top: 0.1em;
-}
-
 math {
     font-family: inherit;
-    font-size: 1.2em;
+    font-size: 1em;
     display: inline-block;
     width: 100%; /* or any specific width */
     overflow-wrap: break-word;
@@ -121,6 +79,10 @@ mo {
 
 ms, mi {
     color: var(--secondary-color);
+}
+
+ms {
+    font-style: italic;
 }
 
 mtd {

@@ -1,0 +1,59 @@
+<div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>System</h2>
+            <p>{{ service.system }}</p>
+            <h2>Service Name</h2>
+            <input type="text" v-model="service.displayName">
+            <h2>Description</h2>
+            <textarea v-model="service.description"></textarea>
+        </div>
+        <div class="annotated__help">
+            <p>
+                Give your service a name to be able to recognize it.
+                The description is optional but can be useful to provide more context.
+            </p>
+            <p>
+                A service is what the consumer interacts with. For example: an API endpoint may provide multiple capabilities that are used by the consumers to solve different use cases.
+            </p>
+        </div>
+
+        <div class="annotated__controls">
+            <h2>Consumptions</h2>
+            <ul>
+                <li v-for="consumption of service.consumptions">
+                    {{ consumption }}
+                </li>
+            </ul>
+
+            <div class="error block" v-if="service.consumptions.length === 0">
+                <p>
+                    This service is not consumed by any consumer.
+                    Failures are identified at the point of consuming a service.
+                </p>
+                <p>
+                    Please either remove it or add a dependent in order to proceed.
+                </p>
+            </div>
+        </div>
+        <div class="annotated__help">
+            <p>
+                You can select all the consumers that depend on this service.
+                The dependency will be updated for the consumers as well.
+            </p>
+            <p>
+                If there are consumers that are missing, you can go back and add them to the system.
+            </p>
+        </div>
+
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button class="danger" @click="service.remove()">
+                    {{ icon('remove') }} 
+                    Remove Service
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

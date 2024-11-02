@@ -64,23 +64,42 @@
                     <li class="search-result"
                         v-for="template in filteredTemplates"
                         :key="template.title">
-                        <h3 class="search-result__title">
-                            <ext-link :href="slcUrl(template)">
-                                {{ template.title }}
-                            </ext-link>
-                        </h3>
-                        <p class="search-result__type">
-                            <span title="Type">{{ templateType(template) }}: </span>
-                            <span title="Event unit">{{ templateUnit(template) }}</span>
-                        </p>
-                        <ul class="search-result__tags">
-                            <li v-for="tag in template.tags" @click="templateFilter = tag">
-                                <button>{{ tag }}</button>
-                            </li>
-                        </ul>
-                        <p>
-                            {{ template.description }}
-                        </p>
+                        <article>
+                            <section>
+                                <h3 class="search-result__title">
+                                    <ext-link :href="slcUrl(template)">
+                                        {{ template.title }}
+                                    </ext-link>
+                                </h3>
+                                <p class="search-result__type">
+                                    <span title="Type">{{ templateType(template) }}: </span>
+                                    <span title="Event unit">{{ templateUnit(template) }}</span>
+                                </p>
+                                <ul class="search-result__tags">
+                                    <li v-for="tag in template.tags" @click="templateFilter = tag">
+                                        <button>{{ tag }}</button>
+                                    </li>
+                                </ul>
+                                <p>
+                                    {{ template.description }}
+                                </p>        
+                            </section>
+                            <section>
+                                <div class="code block" id="sli-formula-code">
+                                    <s-l-fraction-component
+                                        :event-unit="templateUnit(template)"
+                                        :lower-bound="template.lowerBound"
+                                        :lower-threshold="template.lowerThreshold || '$LT'"
+                                        :metric-name="template.metricName"
+                                        :metric-unit="template.metricUnit"
+                                        :upper-bound="template.upperBound"
+                                        :upper-threshold="template.upperThreshold || '$UT'"
+                                        :eventUnit="template.eventUnit"
+                                        time-period="SLO Window"
+                                        time-label-id="slo-window-unit-multiplier"></s-l-fraction-component>
+                                </div>
+                            </section>
+                        </article>
                     </li>
                 </ul>
                 <p>
@@ -91,6 +110,7 @@
                 </p>
             </section>
         </article>
+        <footer-component></footer-component>
     </main>
 
     <script type="module" src="index.js" defer async></script>

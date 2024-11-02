@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Alata&family=Roboto&family=RobotoMono&display=swap');
 @import url('variables.css');
+@import url('vue-specific.css');
 @import url('inputs.css');
 @import url('code.css');
 @import url('toast.css');
+@import url('layout.css');
+@import url('annotated.css');
 
 html {
     scroll-behavior: smooth;
@@ -23,7 +26,22 @@ body {
 
 .block {
     display: block;
-    margin: 1em 0;
+    margin: var(--gap2) 0;
+}
+
+.block-h {
+    display: block;
+    margin: var(--gap) 0;
+}
+
+.block-v {
+    display: block;
+    margin: 0 var(--gap);
+}
+
+.block-both {
+    display: block;
+    margin: var(--gap) var(--gap);
 }
 
 .block p {
@@ -31,19 +49,19 @@ body {
 }
 
 .info.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
 
 .warning.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--primary-color);
     color: var(--background-color);
 }
 
 .error.block {
-    padding: 0.5rem;
+    padding: var(--gap);
     background-color: var(--brand-red);
     color: var(--background-color);
 }
@@ -115,8 +133,9 @@ header h1 {
     padding: 0 1em;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6, th, legend, caption {
     font-family: var(--title-font-family);
+    font-weight: 400;
 }
 
 h1[id] {
@@ -134,7 +153,15 @@ h2 {
 
 h3 {
     font-size: 1.2em;
-    font-weight: 400;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+hr {
+    border: none;
+    border-top: var(--bthick) solid var(--divider-color);
 }
 
 time {
@@ -146,29 +173,18 @@ table {
     border-collapse: collapse;
 }
 
-th {
-    font-family: var(--title-font-family);
-}
-
 th, td {
     text-align: left;
-    border-bottom: 1px solid currentColor;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+th[colspan] {
+    text-align: center;
+    font-size: 1.2em;
 }
 
 td button {
     width: 100%;
-}
-
-footer {
-    padding: 4em 0;
-    text-align: center;
-    font-size: 0.8em;
-    background-color: var(--background-darker);
-    color: var(--primary-color);
-}
-
-.footer__logo {
-    width: 10em;
 }
 
 .link-list {

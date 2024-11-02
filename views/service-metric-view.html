@@ -1,0 +1,101 @@
+<div>
+
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Service</h2>
+            <p>{{ service }}</p>
+            <h2>Failures</h2>
+            <div v-if="service.failures.length === 0" class="error block">
+                <p>
+                    You have not identified any failures for this service.
+                    Make sure that there is a consumption for this service and you
+                    have identified the symptoms for the failures.
+                </p>
+            </div>    
+        </div>
+    </div>
+        <div v-for="failure of service.failures" class="annotated">
+            <div class="annotated__controls">
+                <p>{{ failure.symptom }}</p>
+            </div>
+
+            <div class="annotated__help">
+                <code>
+                    <span class="punct">{{ icon('because') }}</span>
+                    When
+                    <span title="Service" class="exprs">
+                        {{ failure.service.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;
+                    <span class="punct">{{ icon('because') }}</span>
+                    Provided by
+                    <span title="System" class="exprs">
+                        {{ failure.service.system.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;
+                    <span class="punct">{{ icon('because') }}</span>
+                    Is used by
+                    <span title="Consumer" class="exprs">
+                        {{ failure.consumption.consumer.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('because') }}</span>
+                    In order to
+                    <span title="Consumption" class="exprs">
+                        {{ failure.consumption.displayName }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('because') }}</span>
+                    With the consequence of
+                    <span title="Consequence" class="exprs">
+                        {{ failure.consequence }}
+                    </span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="punct">{{ icon('because') }}</span>
+                    Leading to
+                    <span title="Business Impact" class="exprs">
+                        {{ failure.businessImpact }}
+                    </span>
+                    <span class="punct"> (</span>
+                    <span title="Impact Level" class="exprs">
+                        {{ failure.impactLevel }}
+                    </span>
+                    impact<span class="punct">, </span>
+                    <span title="Likelihood" class="exprs">
+                        {{ failure.likelihood }}
+                    </span>
+                    likelihood<span class="punct">)</span>
+                </code>
+            </div>
+        </div>
+    </div>
+    
+    <show-hide-component
+        v-for="metric in service.metrics"
+        title="Metric"
+        :name="metric">
+        <metric-view
+            :metric="metric"></metric-view>
+    </show-hide-component>
+
+    <div class="annotated" v-if="service.failures.length">
+        <div class="annotated__controls">
+            <div class="button-bar">
+                <button @click="service.addNewMetric()">
+                    {{ icon('add') }} 
+                    Add New Metric
+                </button>
+            </div>
+        </div>
+        <div class="annotated__help">
+            {{ service }} has {{ service.failures.length }} failures and
+            {{ service.metrics.length }} metrics.
+        </div>
+    </div>
+
+</div>

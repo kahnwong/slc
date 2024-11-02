@@ -1,0 +1,89 @@
+<div>
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Consumption</h2>
+            <p>{{ failure.consumption }}</p>
+            <h2>Symptom</h2>
+            <p>{{ failure.symptom }}</p>
+            <h2>Service</h2>
+            <p>{{ failure.service }}</p>
+            <h2>Consequence</h2>
+            {{ failure.consequence }}
+        </div>
+        <div class="annotated__help">
+            <code>
+                <span title="Consequence" class="exprs">
+                    {{ failure.consequence }}
+                </span>
+                <br>
+                &nbsp;<span class="punct">{{ icon('because') }}</span>
+                Because
+                <span title="Symptom" class="exprs">
+                    {{ failure.symptom }}
+                </span>
+                <br>
+                &nbsp;&nbsp;<span class="punct">{{ icon('because') }}</span>
+                When
+                <span title="Consumer" class="exprs">
+                    {{ failure.consumption.consumer.displayName }}
+                </span>
+                is trying to
+                <span title="Consumption" class="exprs">
+                    {{ failure.consumption.displayName }}
+                </span>
+                <br>
+                &nbsp;&nbsp;&nbsp;<span class="punct">{{ icon('because') }}</span>
+                Using
+                <span title="Service" class="exprs">
+                    {{ failure.service.displayName }}
+                </span>
+                provided by
+                <span title="System" class="exprs">
+                    {{ failure.service.system.displayName }}
+                </span>
+            </code>
+        </div>
+        <div class="annotated__controls">
+            <h2>Business Impact</h2>
+            <input type="text" v-model="failure.businessImpact">
+        </div>
+        <div class="annotated__help">
+            <p>
+                What is the business impacted of this failure?
+            </p>
+            <p>
+                When thinking about the business impact, think about the money, time, and resources that are lost when this failure occurs.
+            </p>
+        </div>
+    </div>
+    
+    <div class="annotated">
+        <div class="annotated__controls">
+            <h2>Impact Level</h2>
+            <select v-model="failure.impactLevel">
+                <option v-for="impactLevel of config.impactLevel.possibleValues"
+                    :value="impactLevel">
+                    {{ impactLevel }}
+                </option>
+            </select>
+            <h2>Likelihood</h2>
+            <select v-model="failure.likelihood">
+                <option v-for="likelihood of config.likelihood.possibleValues"
+                    :value="likelihood">
+                    {{ likelihood }}
+                </option>
+            </select>
+            <h2>Priority</h2>
+            <p>{{ failure.priority }}</p>
+        </div>
+        <div class="annotated__help">
+            <p>
+                Risk = likelihood &times; impact
+            </p>
+            <p>
+                What is the negative impact of this failure?
+                We use this setting to sort the metrics by the priority of the risks they monitor.
+            </p>
+        </div>
+    </div>
+</div>
